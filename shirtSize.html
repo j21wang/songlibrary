@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            label{
+                display: inline-block;
+                float: left;
+                clear: left;
+                width: 110px;
+                text-align: left;
+            }
+
+            input{
+                display: inline-block;
+                float: left;
+            }
+
+            #box{
+
+                width: 300px;
+                height: 30px;
+                position: relative;
+                top:50px;
+                left:-295px;
+                display: inline-block;
+
+            }
+
+            #box2{
+
+                width: 300px;
+                height: 50px;
+                position: relative;
+                top: 70px;
+                left: -600px;
+                display: inline-block;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <form id="form1">
+            <label>Shoulder Width:</label><input id="shoulderInput" name="shoulder" type="text">
+            <label>Chest:</label><input id="chestInput" name="chest" type="text"><br>
+            <br>
+            <label>Waist:</label><input id="waistInput" name="waist" type="text"><br>
+            <label>Hip:</label><input id="hipInput" name="hip" type="text"><br>
+            <label>Length:</label><input id="lengthInput" name="length" type="text"><br>
+            <input id="click" type="button" value="Submit"/>
+        </form>
+
+        <div id="box"></div>
+        <div id="box2"></div>
+
+        <script>
+
+            var sizeWaist;
+            var sizeHip;
+            var sizeLength;
+            var polo;
+            var pants;
+            function getInput(){
+
+                var polo;
+                var pants;
+                var chest = document.getElementById('chestInput').value;
+                var shoulder = document.getElementById('shoulderInput').value;
+                var sizeChest = chestSize(chest);
+                var sizeShoulder = shoulderWidth(shoulder);
+                
+                if(sizeChest >= sizeShoulder) {
+
+                    if(sizeChest == 100) sizeChest = 'M';
+                    if(sizeChest == 200) sizeChest = 'L';
+                    if(sizeChest == 300) sizeChest = 'XL';
+                    if(sizeChest == 400) sizeChest = 'XXL';
+                    if(sizeChest == 500) sizeChest = 'Invalid input.';
+                    polo = sizeChest;
+
+                } else if(sizeChest < sizeShoulder) {
+
+                    if(sizeShoulder == 100) sizeShoulder = 'M';
+                    if(sizeShoulder == 200) sizeSHoulder = 'L';
+                    if(sizeShoulder == 300) sizeShoulder = 'XL';
+                    if(sizeShoulder == 400) sizeShoulder = 'XXL';
+                    if(sizeShoulder == 500) sizeShoulder = 'Invalid input.';
+                    polo = sizeShoulder;
+               
+                }
+
+                document.getElementById("box").innerHTML = 'Polo Size: ' + polo;
+
+                var waist = document.getElementById('waistInput').value;
+                var hip = document.getElementById('hipInput').value;
+                var length = document.getElementById('lengthInput').value;
+                var sizeWaist = waistSize(waist);
+                var sizeHip = hipSize(hip);
+                var sizeLength = Length(length);
+
+                if(sizeWaist >= sizeHip && sizeWaist >= sizeLength) {
+                    
+                    if(sizeWaist == 500) sizeWaist = 'Invalid input.';
+                    if((sizeWaist - Math.floor(sizeWaist)) == 0.5) {
+                        sizeWaist = Math.floor(sizeWaist);
+                        sizeWaist = sizeWaist + 'H';
+                    }
+                    pants = sizeWaist;
+                }
+                
+                if(sizeHip >= sizeWaist && sizeHip >= sizeLength) {
+                    
+                    if(sizeHip == 500) sizeHip = 'Invalid input.';
+                    if((sizeHip - Math.floor(sizeHip)) == 0.5){
+                        sizeHip = Math.floor(sizeHip);
+                        sizeHip = sizeHip + 'H';
+                    }
+                    
+                    if((sizeHip - Math.floor(sizeHip)) == 0.75){
+                        sizeHip = Math.floor(sizeHip);
+                        sizeHip = sizeHip + 'H and ' + sizeHip2;
+                    }
+
+                    
+
+                    pants = sizeHip;
+                }
+                
+                if(sizeLength >= sizeHip && sizeLength >= sizeWaist) {
+                    
+                    if(sizeLength == 500) sizeLength = 'Invalid input.';
+                    if((sizeLength - Math.floor(sizeLength)) == 0.5){
+                        sizeLength = Math.floor(sizeLength);
+                        sizeLength = sizeLength + 'H';
+                    }
+
+                     if((sizeLength - Math.floor(sizeLength)) == 0.75){
+                        sizeLength = Math.floor(sizeLength);
+                        sizeLength = sizeLength + 'H and ' + sizeLength2;
+                    }
+
+                    pants = sizeLength;
+                }
+
+                document.getElementById("box2").innerHTML = 'Pants Size: ' + pants;
+
+            }
+
+            function chestSize(chest){
+
+                var sizeChest;
+
+                if(chest==""){
+                    sizeChest = -1;
+                    return;
+                }
+                if(chest<=26) sizeChest = 4;
+                else if(chest<=27) sizeChest = 5;
+                else if(chest<=28) sizeChest = 6;
+                else if(chest<=28.75) sizeChest = 7;
+                else if(chest<=30) sizeChest = 8
+                else if(chest<=31.5) sizeChest = 10;
+                else if(chest<=33) sizeChest = 12;
+                else if(chest<=35) sizeChest = 14;
+                else if(chest<=36.5) sizeChest = 16;
+                else if(chest<=38) sizeChest = 18;
+                else if(chest<=39.5) sizeChest = 20;
+                else if(chest<=43) sizeChest = 100;
+                else if(chest<=47) sizeChest = 200;
+                else if(chest<=51) sizeChest = 300;
+                else if(chest<=54) sizeChest = 400;
+                else sizeChest = 500;
+
+                return sizeChest;
+            }
+
+            function shoulderWidth(shoulder){
+
+                var sizeShoulder;
+
+                if(shoulder==""){
+                    sizeShoulder = -1;
+                    return;
+                }
+                if(shoulder<=12) sizeShoulder = 4;
+                else if(shoulder<=12.375) sizeShoulder = 5;
+                else if(shoulder<=12.75) sizeShoulder = 6;
+                else if(shoulder<=13.125) sizeShoulder = 7;
+                else if(shoulder<=14) sizeShoulder = 8;
+                else if(shoulder<=14.25) sizeShoulder = 10;
+                else if(shoulder<=15) sizeShoulder = 12;
+                else if(shoulder<=15.75) sizeShoulder = 14;
+                else if(shoulder<=16.25) sizeShoulder = 16;
+                else if(shoulder<=17) sizeShoulder = 18;
+                else if(shoulder<=17.75) sizeShoulder = 20;
+                else if(shoulder<=21) sizeShoulder = 100;
+                else if(shoulder<=22) sizeShoulder = 200;
+                else if(shoulder<=23) sizeShoulder = 300;
+                else if(shoulder<=24) sizeShoulder = 400;
+                else sizeShoulder = 500;
+
+                return sizeShoulder;
+
+            }
+
+            function waistSize(waist){
+
+                var sizeWaist;
+
+                if(waist==""){
+                    sizeWaist = -1;
+                    return;
+                }
+                if(waist<=22.5) sizeWaist = 4;
+                else if(waist<=23) sizeWaist = 5;
+                else if(waist<=23.5) sizeWaist = 6;
+                else if(waist<=24) sizeWaist = 7;
+                else if(waist<=24.5) sizeWaist = 8;
+                else if(waist<=25.5) sizeWaist = 10;
+                else if(waist<=26.5) sizeWaist = 12;
+                else if(waist<=27.5) sizeWaist = 14;
+                else if(waist<=28.5) sizeWaist = 8.5
+                else if(waist<=29) sizeWaist = 16;
+                else if(waist<=29.5) sizeWaist = 10.5;
+                else if(waist<=30) sizeWaist = 18;
+                else if(waist<=30.5) sizeWaist = 12.5;
+                else if(waist<=31) sizeWaist = 20;
+                else if(waist<=32) sizeWaist = 14.5;
+                else if(waist<=33) sizeWaist = 16.5;
+                else if(waist<=34) sizeWaist = 18.5;
+                else if(waist<=35) sizeWaist = 20.5;
+                else sizeWaist = 500;
+
+                return sizeWaist;
+
+            }
+
+            function hipSize(hip){
+
+                var sizeHip;
+
+                if(hip==""){
+                    sizeHip == "Invalid input";
+                    return sizeHip;
+                }
+                if(hip<=27) sizeHip = 4;
+                else if(hip<=28) sizeHip = 5;
+                else if(hip<=29) sizeHip = 6;
+                else if(hip<=29.5) sizeHip = 7;
+                else if(hip<=30) sizeHip = 8;
+                else if(hip<=32) sizeHip = 10;
+                else if(hip<=33) sizeHip = 8.5;
+                else if(hip<=34) sizeHip = 12;
+                else if(hip<=35) sizeHip = 10.5;
+                else if(hip<=36) sizeHip = 14;
+                else if(hip<=37) sizeHip = 12.5;
+                else if(hip<=38) sizeHip = 16;
+                else if(hip<=39) sizeHip = 14.5;
+                else if(hip<=39.5) sizeHip = 18;
+                else if(hip<=41) {
+                    sizeHip = 16.75;
+                    sizeHip2 = 20;
+                }
+                else if(hip<=42.25) sizeHip = 18.5;
+                else if(hip<=43.5) sizeHip = 20.5;
+                else sizeHip = 500;
+
+                return sizeHip;
+
+             }
+
+            function Length(length){
+
+                if(length==""){
+                    sizeLength == -1;
+                    return;
+                }             
+                if(length<=24.25) sizeLength = 4;
+                else if(length<=26.125) sizeLength = 5;
+                else if(length<=27.5) sizeLength = 6;
+                else if(length<=28.375) sizeLength = 7;
+                else if(length<=30.25) {
+                    sizeLength = 8.75;
+                    sizeLength2 = 8;
+                }
+                else if(length<=33.5) {
+                    sizeLength = 10.75;
+                    sizeLength2 = 10;
+                }
+                else if(length<=36.75) {
+                    sizeLength = 12.75;
+                    sizeLength2 = 12;
+                }
+                else if(length<=39) {
+                    sizeLength = 14.75;
+                    sizeLength2 = 14;
+                }
+                else if(length<=41) {
+                    sizeLength = 16.75;
+                    sizeLength2 = 16;
+                }
+                else if(length<=42.25) {
+                    sizeLength = 18.75;
+                    sizeLength2 = 18;
+                }
+                else if(length<=43.5) {
+                    sizeLength = 20.75;
+                    sizeLength2 = 20;
+                }
+                else sizeLength = 500;
+
+                return sizeLength;
+            }
+ 
+            document.getElementById("click").onclick = function() {
+                getInput();
+            }
+
+        </script>
+    </body>
+</html>
